@@ -20,7 +20,7 @@ EOF
 
 ## Konfigurasi local
 cat > /etc/bind/named.conf.local << EOF
-zone "k54.com" {
+zone "k24.com" {
     type master;
     notify yes;
     also-notify { 192.238.3.4; };
@@ -33,7 +33,7 @@ zone "3.238.192.in-addr.arpa" {
     notify yes;
     also-notify { 192.238.3.4; };
     allow-transfer { 192.238.3.4; };
-    file "/etc/bind/k54/192.238.3.rev";
+    file "/etc/bind/k24/192.238.3.rev";
 };
 EOF
 
@@ -50,8 +50,8 @@ $TTL 604800
                         2419200
                         604800 )
 
-        IN NS   ns1.k54.com.
-        IN NS   ns2.k54.com.
+        IN NS   ns1.k24.com.
+        IN NS   ns2.k24.com.
 
 @       IN A    192.238.3.3
 ns1     IN A    192.238.3.3
@@ -67,13 +67,13 @@ galadriel       IN A    192.238.2.5
 celeborn        IN A    192.238.2.6
 oropher         IN A    192.238.2.7
 
-www     IN CNAME        k54.com.
+www     IN CNAME        k24.com.
 EOF
 
 ## Buat zone file reverse
 cat > /etc/bind/k24/192.238.3.rev << 'EOF'
 $TTL 604800
-@       IN SOA  ns1.k54.com. root.k54.com. (
+@       IN SOA  ns1.k24.com. root.k24.com. (
                         2025103001
                         604800
                         86400
@@ -81,19 +81,19 @@ $TTL 604800
                         604800 )
 
 ; Name Servers
-        IN NS   ns1.k54.com.
-        IN NS   ns2.k54.com.
+        IN NS   ns1.k24.com.
+        IN NS   ns2.k24.com.
 
 ; PTR Records
-3       IN PTR  ns1.k54.com.
-4       IN PTR  ns2.k54.com.
+3       IN PTR  ns1.k24.com.
+4       IN PTR  ns2.k24.com.
 EOF
 
 # Start service
 service bind9 start
 
 # Testing
-nslookup k54.com 127.0.0.1
+nslookup k24.com 127.0.0.1
 nslookup palantir.k24.com 127.0.0.1
 Amdir (DNS Slave)
 # Install bind9
@@ -101,10 +101,10 @@ apt update && apt-get install bind9 bind9utils -y
 
 # Konfigurasi local
 cat > /etc/bind/named.conf.local << EOF
-zone "k54.com" {
+zone "k24.com" {
     type slave;
     masters { 192.238.3.3; };
-    file "/var/cache/bind/k54.com";
+    file "/var/cache/bind/k24.com";
 };
 
 zone "3.238.192.in-addr.arpa" {
