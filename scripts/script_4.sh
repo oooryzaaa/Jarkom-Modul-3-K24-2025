@@ -89,17 +89,17 @@ $TTL 604800
 4       IN PTR  ns2.k24.com.
 EOF
 
-# Start service
+## Start service
 service bind9 start
 
-# Testing
+## Testing
 nslookup k24.com 127.0.0.1
 nslookup palantir.k24.com 127.0.0.1
 Amdir (DNS Slave)
-# Install bind9
+## Install bind9
 apt update && apt-get install bind9 bind9utils -y
 
-# Konfigurasi local
+## Konfigurasi local
 cat > /etc/bind/named.conf.local << EOF
 zone "k24.com" {
     type slave;
@@ -114,19 +114,19 @@ zone "3.238.192.in-addr.arpa" {
 };
 EOF
 
-# Start service
+## Start service
 service bind9 start
 
-# Testing
+## Testing
 nslookup k24.com 127.0.0.1
 nslookup ns1.k24.com 127.0.0.1
 Aldarion (DHCP Server)
 bash
-# Edit /etc/dhcp/dhcpd.conf - ganti domain-name-servers menjadi 192.238.5.2
+## Edit /etc/dhcp/dhcpd.conf - ganti domain-name-servers menjadi 192.238.5.2
 service isc-dhcp-server restart
 Minastir (DNS Forwarder)
 bash
-# Konfigurasi options
+## Konfigurasi options
 cat > /etc/bind/named.conf.options << 'EOF'
 options {
     directory "/var/cache/bind";
@@ -152,7 +152,7 @@ apt-get update && apt-get install isc-dhcp-client -y
 dhclient -r
 dhclient eth0
 
-# Testing
+## Testing
 nslookup k24.com
 nslookup palantir.k54.com
 nslookup ns1.k54.com
