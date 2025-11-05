@@ -1,6 +1,7 @@
 # Jarkom-Modul-3-K24-2025
 
 ##1.
+
 ### DURIN [ROUTER]
 auto eth0
 iface eth0 inet static
